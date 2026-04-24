@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -31,15 +32,22 @@ import { ClientsService } from './clients/clients.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'root',
-      database: 'khayal_alzili',
-      entities: [Category, Show, User, Setting, Banner, Client],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST', 'localhost'),
+        port: configService.get<number>('DB_PORT', 5432),
+        username: configService.get<string>('DB_USERNAME', 'postgres'),
+        password: configService.get<string>('DB_PASSWORD', 'root'),
+        database: configService.get<string>('DB_DATABASE', 'khayal_alzili'),
+        entities: [Category, Show, User, Setting, Banner, Client],
+        synchronize: true, // Should be false in production
+      }),
     }),
     TypeOrmModule.forFeature([Category, Show, User, Setting, Banner, Client]),
     ServeStaticModule.forRoot({
