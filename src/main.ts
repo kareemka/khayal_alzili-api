@@ -9,6 +9,8 @@ async function bootstrap() {
     origin: [
       'https://admin.shadowsilhouette.com',
       'https://shadowsilhouette.com',
+      'http://localhost:3002',
+      'http://localhost:3001',
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,

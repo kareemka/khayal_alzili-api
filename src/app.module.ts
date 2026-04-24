@@ -13,6 +13,7 @@ import { User } from './users/user.entity';
 import { Setting } from './settings/setting.entity';
 import { Banner } from './banners/banner.entity';
 import { Client } from './clients/client.entity';
+import { Backstage } from './backstage/backstage.entity';
 
 // Modules
 import { AuthModule } from './auth/auth.module';
@@ -29,6 +30,8 @@ import { BannersController } from './banners/banners.controller';
 import { BannersService } from './banners/banners.service';
 import { ClientsController } from './clients/clients.controller';
 import { ClientsService } from './clients/clients.service';
+import { BackstageController } from './backstage/backstage.controller';
+import { BackstageService } from './backstage/backstage.service';
 
 @Module({
   imports: [
@@ -45,11 +48,11 @@ import { ClientsService } from './clients/clients.service';
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'root'),
         database: configService.get<string>('DB_DATABASE', 'khayal_alzili'),
-        entities: [Category, Show, User, Setting, Banner, Client],
+        entities: [Category, Show, User, Setting, Banner, Client, Backstage],
         synchronize: true, // Should be false in production
       }),
     }),
-    TypeOrmModule.forFeature([Category, Show, User, Setting, Banner, Client]),
+    TypeOrmModule.forFeature([Category, Show, User, Setting, Banner, Client, Backstage]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
@@ -59,7 +62,7 @@ import { ClientsService } from './clients/clients.service';
     SettingsModule,
     ClientsModule,
   ],
-  controllers: [AppController, CategoriesController, ShowsController, BannersController, ClientsController],
-  providers: [AppService, CategoriesService, ShowsService, BannersService, ClientsService],
+  controllers: [AppController, CategoriesController, ShowsController, BannersController, ClientsController, BackstageController],
+  providers: [AppService, CategoriesService, ShowsService, BannersService, ClientsService, BackstageService],
 })
 export class AppModule { }

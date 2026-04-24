@@ -28,8 +28,6 @@ export class Show {
   @Column({ nullable: true })
   youtubeTrailerLink: string;
 
-  @Column({ nullable: true })
-  promoLink: string;
 
   @Column({ nullable: true })
   seoImage: string; // Optimized image for SEO/Social sharing

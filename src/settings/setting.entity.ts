@@ -23,4 +23,10 @@ export class Setting {
 
   @Column({ nullable: true })
   whatsapp: string;
+
+  @Column({ nullable: true })
+  youtube: string;
+
+  @Column({ nullable: true })
+  tiktok: string;
 }
