@@ -6,8 +6,11 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: ['https://admin.shadowsilhouette.com', 'https://shadowsilhouette.com', 'https://api.shadowsilhouette.com'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: [
+      'https://admin.shadowsilhouette.com',
+      'https://shadowsilhouette.com',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
   });
 
