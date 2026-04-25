@@ -11,14 +11,14 @@ export class ShowsService {
   ) {}
 
   findAll(): Promise<Show[]> {
-    return this.showsRepository.find();
+    return this.showsRepository.find({ order: { sortOrder: 'ASC', id: 'DESC' } });
   }
 
   async findAllPaginated(page: number, limit: number) {
     const [data, total] = await this.showsRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
-      order: { id: 'DESC' },
+      order: { sortOrder: 'ASC', id: 'DESC' },
     });
     return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
   }

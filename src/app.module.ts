@@ -49,7 +49,7 @@ import { BackstageService } from './backstage/backstage.service';
         password: configService.get<string>('DB_PASSWORD', 'root'),
         database: configService.get<string>('DB_DATABASE', 'khayal_alzili'),
         entities: [Category, Show, User, Setting, Banner, Client, Backstage],
-        synchronize: true, // Should be false in production
+        synchronize: false, // Turned off for manual migrations
       }),
     }),
     TypeOrmModule.forFeature([Category, Show, User, Setting, Banner, Client, Backstage]),

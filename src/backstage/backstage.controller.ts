@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, UseInterceptors, UploadedFile, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, UseInterceptors, UploadedFile, Body, UseGuards, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BackstageService } from './backstage.service';
 import { diskStorage } from 'multer';
@@ -10,7 +10,13 @@ export class BackstageController {
   constructor(private readonly backstageService: BackstageService) {}
 
   @Get()
-  findAll() {
+  findAll(@Query('page') page?: string, @Query('limit') limit?: string) {
+    if (page && limit) {
+      return this.backstageService.findAllPaginated(+page, +limit);
+    }
+    if (limit) {
+      return this.backstageService.findAll(+limit);
+    }
     return this.backstageService.findAll();
   }
 
@@ -25,9 +31,10 @@ export class BackstageController {
       },
     }),
   }))
-  create(@UploadedFile() file: Express.Multer.File) {
+  create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     return this.backstageService.create({
       image: file.filename,
+      title: body.title,
     });
   }
 

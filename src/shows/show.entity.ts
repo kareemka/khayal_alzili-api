@@ -35,6 +35,9 @@ export class Show {
   @Column({ default: '2026' })
   releaseYear: string;
 
+  @Column({ type: 'int', default: 0 })
+  sortOrder: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

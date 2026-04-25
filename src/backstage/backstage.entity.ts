@@ -8,6 +8,9 @@ export class Backstage {
   @Column()
   image: string;
 
+  @Column({ nullable: true })
+  title: string;
+
   @CreateDateColumn()
   createdAt: Date;
 }

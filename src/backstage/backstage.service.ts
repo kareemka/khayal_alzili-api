@@ -10,10 +10,20 @@ export class BackstageService {
     private readonly backstageRepository: Repository<Backstage>,
   ) {}
 
-  findAll(): Promise<Backstage[]> {
+  findAll(limit?: number): Promise<Backstage[]> {
     return this.backstageRepository.find({
       order: { createdAt: 'DESC' },
+      ...(limit ? { take: limit } : {}),
     });
+  }
+
+  async findAllPaginated(page: number, limit: number) {
+    const [data, total] = await this.backstageRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { createdAt: 'DESC' },
+    });
+    return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
 
   async create(data: Partial<Backstage>): Promise<Backstage> {
