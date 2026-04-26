@@ -15,6 +15,10 @@ export class CategoriesService {
       relations: ['shows'],
       order: {
         id: 'ASC',
+        shows: {
+          sortOrder: 'ASC',
+          id: 'DESC',
+        },
       },
     });
   }
@@ -24,7 +28,13 @@ export class CategoriesService {
       relations: ['shows'],
       skip: (page - 1) * limit,
       take: limit,
-      order: { id: 'DESC' },
+      order: {
+        id: 'DESC',
+        shows: {
+          sortOrder: 'ASC',
+          id: 'DESC',
+        },
+      },
     });
     return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
@@ -33,6 +43,12 @@ export class CategoriesService {
     return this.categoriesRepository.findOne({
       where: { id },
       relations: ['shows'],
+      order: {
+        shows: {
+          sortOrder: 'ASC',
+          id: 'DESC',
+        },
+      },
     });
   }
 
